@@ -8,44 +8,49 @@
 //  q - set q to the updated generalized coordinate using Runge-Kutta time integration
 //  qdot - set qdot to the updated generalized velocity using Runge-Kutta time integration
 #include <iostream>
+template<typename FORCE>
+Eigen::VectorXd f(Eigen::VectorXd& y, FORCE &force) {
+  Eigen::VectorXd y0(1);
+  y0 << y(0);
+  
+  Eigen::VectorXd y1(1);
+  y1 << y(1);
+  
+  Eigen::VectorXd _force;
+  force(_force, y1, y0);
+  
+  Eigen::VectorXd _f(2);
+  _f << _force(0), y0(0);
+  
+  return std::move(_f);
+}
+
 template<typename FORCE> 
-inline void runge_kutta(Eigen::VectorXd &q, Eigen::VectorXd &qdot, double dt, double mass,  FORCE &force) {
+inline void runge_kutta(Eigen::VectorXd &q, Eigen::VectorXd &qdot, double dt, double mass, FORCE &force) {
   Eigen::MatrixXd A_inv(2, 2);
   A_inv(0, 0) = 1/mass;
   A_inv(0, 1) = 0;
   A_inv(1, 0) = 0;
   A_inv(1, 1) = 1;
   
-  Eigen::MatrixXd y(2, 1);
-  y(0, 0) = qdot(0);
-  y(1, 0) = q(0);
+  Eigen::VectorXd y(2);
+  y << qdot(0), q(0);
   
-  Eigen::VectorXd f;
-  force(f, q, qdot);
+  Eigen::VectorXd k1 = A_inv * f(y, force);
   
+  Eigen::VectorXd _y(2);
   
+  _y = y + dt/2 * k1;
+  Eigen::VectorXd k2 = A_inv * f(_y, force);
   
+  _y = y + dt/2 * k2;
+  Eigen::VectorXd k3 = A_inv * f(_y, force);
   
+  _y = y + dt * k3;
+  Eigen::VectorXd k4 = A_inv * f(_y, force);
   
-  Eigen::MatrixXd f_y(2, 1);
-  f_y(0, 0) = f(0);
-  f_y(1, 0) = qdot(0);
+  _y = y + dt/6 * (k1 + 2*k2 + 2*k3 + k4);
   
-  
-  
-  Eigen::MatrixXd y_next(2, 1);
-  
-  
-  
-  static bool once = true;
-  if (once) {
-    std::cout << "---" << std::endl;
-    std::cout << qdot << std::endl;
-    std::cout << "---" << std::endl;
-    std::cout << q << std::endl;
-    std::cout << "---" << std::endl;
-    std::cout << y << std::endl;
-    std::cout << "---" << std::endl;
-    once = false;
-  }
+  q(0) = _y(1);
+  qdot(0) = _y(0);
 }
