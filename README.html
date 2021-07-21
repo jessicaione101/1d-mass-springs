@@ -145,7 +145,8 @@ m\dot{\mathbf{v}} &amp;=&amp; -k\mathbf{x} \\
 <p><span class="math display">\[ K\dot{\mathbf{y}} = \mathbf{f}\left(\mathbf{y}\right).\]</span></p>
 <p>Backward Euler discretizes the time derivitive using the same first-order finite difference as Forward Euler. However, while Forward Euler would choose to evaluate the function <span class="math inline">\(\mathbf{f}\)</span> at time <span class="math inline">\(t\)</span>, Backward Euler chooses to evaluate it at time <span class="math inline">\(t+1\)</span> yielding the following update scheme</p>
 <p><span class="math display">\[ K\mathbf{y}^{t+t} = K\mathbf{y}^{t} +\Delta t\mathbf{f}\left(\mathbf{y}^{t+1}\right).\]</span></p>
-<p>If <span class="math inline">\(\mathbf{f}\)</span> is a linear function in <span class="math inline">\(\mathbf{y}\)</span>, this update can be efficiently evaluated (you’ll do it in this assignment!) . ### Attempt #4: Symplectic Euler</p>
+<p>If <span class="math inline">\(\mathbf{f}\)</span> is a linear function in <span class="math inline">\(\mathbf{y}\)</span>, this update can be efficiently evaluated (you’ll do it in this assignment!).</p>
+<h3 id="attempt-4-symplectic-euler">Attempt #4: Symplectic Euler</h3>
 <p><a href="https://en.wikipedia.org/wiki/Semi-implicit_Euler_method">Symplectic Euler</a>, so named because it preserves the area carved out by an objects phase-space trajectory, is well suited to the types of coupled, first-order ordinary differential equations we will be solving. Given the system</p>
 <p><span class="math display">\[\begin{eqnarray*} 
 m\dot{\mathbf{v}} &amp;=&amp; \mathbf{f}\left(\mathbf{x}\right) \\ 
