@@ -7,7 +7,7 @@
 //Output:
 //  q - set q to the updated generalized coordinate using Runge-Kutta time integration
 //  qdot - set qdot to the updated generalized velocity using Runge-Kutta time integration
-#include <iostream>
+
 template<typename FORCE>
 Eigen::VectorXd f(Eigen::VectorXd& y, FORCE &force) {
   Eigen::VectorXd y0(1);
