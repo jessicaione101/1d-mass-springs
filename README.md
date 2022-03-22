@@ -1,3 +1,9 @@
+# Disclaimer
+
+This is my implementation of an assigment from the Physics-Based Animation course taught by Prof. David Levin at the University of Toronto. I didn't take this course and my implementation was not submitted for grading. The original material and references can be found at the [course website](https://github.com/dilevin/CSC417-physics-based-animation).
+
+- - -
+
 # Physics-Based Animation – Time Integration of Mass-Spring Systems in One Dimension
 [![](https://github.com/dilevin/CSC2549-a1-mass-spring-1d/workflows/Build-CSC2549-Assignment-One/badge.svg)](https://github.com/dilevin/CSC2549-a1-mass-spring-1d/actions)
 
